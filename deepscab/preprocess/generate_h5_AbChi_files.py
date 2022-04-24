@@ -2,7 +2,7 @@ import h5py
 import numpy as np
 import argparse
 from tqdm import tqdm
-from deeph3.preprocess import antibody_text_parser as ab_parser
+from deepscab.preprocess import antibody_text_parser as ab_parser
 from os import listdir, remove
 import os.path as path
 from pathlib import Path

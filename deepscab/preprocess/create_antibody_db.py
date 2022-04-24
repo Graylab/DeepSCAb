@@ -28,11 +28,11 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-import deeph3
-from deeph3.util.pdb import get_pdb_chain_seq
-from deeph3.util.util import RawTextArgumentDefaultsHelpFormatter
+import deepscab
+from deepscab.util.pdb import get_pdb_chain_seq
+from deepscab.util.util import RawTextArgumentDefaultsHelpFormatter
 
-# Relative paths from deeph3/data
+# Relative paths from deepscab/data
 _DEFAULT_SUMMARY_FILE_PATH = 'info/sabdab_summary.tsv'
 _DEFAULT_ANTIBODY_DATABASE_PATH = 'antibody_database/'
 _TESTSET_FILENAME_ = 'TestSetList.txt'
@@ -287,6 +287,7 @@ def truncate_fasta_files(pdb_ids,
 
 
 def download_file(url, output_path):
+    os.makedirs("info", exist_ok=True)
     with open(output_path, 'w') as f:
         f.write(requests.get(url).content.decode('utf-8'))
 
@@ -394,9 +395,9 @@ def download_sabdab_summary_file(summary_file_path=_DEFAULT_SUMMARY_FILE_PATH,
 
 
 def download_test_dataset(test_set_path='test_set/'):
-    # Change the working directory to the deeph3/data directory
+    # Change the working directory to the deepscab/data directory
     original_dir = os.getcwd()
-    project_path = os.path.abspath(os.path.join(deeph3.__file__, "../.."))
+    project_path = os.path.abspath(os.path.join(deepscab.__file__, "../.."))
     data_dir = Path(os.path.join(project_path, "data"))
     os.chdir(data_dir)
 
@@ -435,7 +436,7 @@ def download_train_dataset(
         **kwargs):
     """
     Downloads a training set from SAbDab, avoids downloading PDB files in the
-    deeph3/data/TestSetList.txt file.
+    deepscab/data/TestSetList.txt file.
 
     :param summary_file_path: Path to the summary file produced by SAbDab
     :type summary_file_path: str
@@ -444,9 +445,9 @@ def download_train_dataset(
     :param max_workers: Max number of workers in the thread pool while downloading.
     :type max_workers: int
     """
-    # Change the working directory to the deeph3/data directory
+    # Change the working directory to the deepscab/data directory
     original_dir = os.getcwd()
-    project_path = os.path.abspath(os.path.join(deeph3.__file__, "../.."))
+    project_path = os.path.abspath(os.path.join(deepscab.__file__, "../.."))
     data_dir = Path(os.path.join(project_path, "data"))
     os.chdir(data_dir)
 
@@ -466,6 +467,7 @@ def download_train_dataset(
                                      **kwargs)
     summary_dataframe = pd.read_csv(summary_file_path, sep='\t')
     all_pdbs = set(summary_dataframe['pdb'].unique())
+    all_pdbs = set(list(all_pdbs)[:20])
 
     # Remove PDB's that appear in the test set
     test_dataset = pd.read_csv(str(data_dir.joinpath(_TESTSET_FILENAME_)))

@@ -8,12 +8,12 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 from datetime import datetime
-import deeph3
-from deeph3.models.AbChiResNet import AbChiResNet
-from deeph3.util.util import RawTextArgumentDefaultsHelpFormatter
-from deeph3.datasets.H5AbChiDataset import H5AbChiDataset
-from deeph3.preprocess.create_antibody_db import download_train_dataset
-from deeph3.preprocess.generate_h5_AbChi_files import antibody_to_h5
+import deepscab
+from deepscab.models.AbChiResNet.AbChiResNet import AbChiResNet
+from deepscab.util.util import RawTextArgumentDefaultsHelpFormatter
+from deepscab.datasets.H5AbChiDataset import H5AbChiDataset
+from deepscab.preprocess.create_antibody_db import download_train_dataset
+from deepscab.preprocess.generate_h5_AbChi_files import antibody_to_h5
 
 _output_names = [
     'dist', 'omega', 'theta', 'phi', 'chi_one', 'chi_two', 'chi_three',
@@ -149,7 +149,7 @@ def _validate(model, validation_loader, device, criterion):
 
 def _get_args():
     """Gets command line arguments"""
-    project_path = os.path.abspath(os.path.join(deeph3.__file__, "../.."))
+    project_path = os.path.abspath(os.path.join(deepscab.__file__, "../.."))
 
     desc = ('''
         Script for training a model using a non-redundant set of bound and 
@@ -157,9 +157,9 @@ def _get_args():
         a resolution cutoff of 3, and with a paired VH/VL. By default, uses 
         the model from https://doi.org/10.1101/2020.02.09.940254.\n
         \n
-        If there is no H5 file named antibody.h5 in the deeph3/data directory, 
+        If there is no H5 file named antibody.h5 in the deepscab/data directory, 
         then the script automatically uses the PDB files in 
-        deeph3/data/antibody_database directory to generate antibody.h5. If no 
+        deepscab/data/antibody_database directory to generate antibody.h5. If no 
         such directory exists, then the script downloads the set of pdbs from
         SabDab outlined above.
         ''')
@@ -235,14 +235,15 @@ def _get_args():
 def _check_for_h5_file(h5_file):
     """Checks for a H5 file. If unavailable, downloads/creates files from SabDab."""
     if not os.path.isfile(h5_file):
-        project_path = os.path.abspath(os.path.join(deeph3.__file__, "../.."))
+        project_path = os.path.abspath(os.path.join(deepscab.__file__,
+                                                    "../.."))
         ab_dir = os.path.join(project_path, 'data/antibody_database')
         print('No H5 file found at {}, creating new file in {}/ ...'.format(
             h5_file, ab_dir))
         if not os.path.isdir(ab_dir):
             print('{}/ does not exist, creating {}/ ...'.format(
                 ab_dir, ab_dir))
-            os.mkdir(ab_dir)
+            os.system(f"mkdir -p {ab_dir}")
         pdb_files = [f.endswith('pdb') for f in os.listdir(ab_dir)]
         if len(pdb_files) == 0:
             print('No PDB files found in {}, downloading PDBs ...'.format(
@@ -292,7 +293,7 @@ def _cli():
     out_dir = args.output_dir
     if not os.path.isdir(out_dir):
         print('Making {} ...'.format(out_dir))
-        os.mkdir(out_dir)
+        os.makedirs(out_dir, exist_ok=True)
     writer = SummaryWriter(os.path.join(out_dir, 'tensorboard'))
 
     print('Arguments:\n', args)

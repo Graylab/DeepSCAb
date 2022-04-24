@@ -1,6 +1,6 @@
 import numpy as np
 
-from deeph3.util.util import _aa_1_3_dict, r2_dict, r3_dict, r4_dict, r5_dict, r6_dict
+from deepscab.util.util import _aa_1_3_dict, r2_dict, r3_dict, r4_dict, r5_dict, r6_dict
 
 from .Constraint import Constraint
 from .ConstraintType import ConstraintType

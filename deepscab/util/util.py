@@ -9,8 +9,8 @@ from os.path import splitext, basename
 from Bio import SeqIO
 from Bio.PDB import PDBParser
 from Bio.SeqUtils import seq1
-from deeph3.models.H3ResNet import H3ResNet
-from deeph3.util.get_bins import get_bin_values
+from deepscab.models.AbChiResNet import AbChiResNet
+from deepscab.util.get_bins import get_bin_values
 
 
 class RawTextArgumentDefaultsHelpFormatter(

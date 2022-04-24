@@ -5,9 +5,9 @@ import torch
 import torch.utils.data as data
 import torch.nn.functional as F
 from tqdm import tqdm
-from deeph3.util.tensor import pad_data_to_same_shape
-from deeph3.util.get_bins import get_dist_bins, get_dihedral_bins, get_planar_bins, get_rotamer_bins
-from deeph3.util.preprocess import bin_dist_angle_matrix, bin_value_matrix
+from deepscab.util.tensor import pad_data_to_same_shape
+from deepscab.util.get_bins import get_dist_bins, get_dihedral_bins, get_planar_bins, get_rotamer_bins
+from deepscab.util.preprocess import bin_dist_angle_matrix, bin_value_matrix
 
 
 class H5AbChiDataset(data.Dataset):

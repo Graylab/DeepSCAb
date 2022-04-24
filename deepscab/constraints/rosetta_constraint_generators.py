@@ -4,7 +4,7 @@ import torch
 
 from .ConstraintType import ConstraintType
 from .Constraint import Constraint
-from deeph3.util.util import _aa_1_3_dict, r2_dict, r3_dict, r4_dict, r5_dict, r6_dict
+from deepscab.util.util import _aa_1_3_dict, r2_dict, r3_dict, r4_dict, r5_dict, r6_dict
 
 
 def neg_log_prob_to_energy(x, y):

@@ -4,8 +4,8 @@ import torch.nn.functional as F
 from Bio import SeqIO
 import numpy as np
 
-from deeph3.util.get_bins import get_dihedral_bins, get_bin_values
-from deeph3.util.util import load_full_seq, one_hot_seq
+from deepscab.util.get_bins import get_dihedral_bins, get_bin_values
+from deepscab.util.util import load_full_seq, one_hot_seq
 
 
 def bin_matrix(in_tensor, are_logits=True, method='max'):
@@ -61,7 +61,7 @@ def get_inputs_from_fasta(fasta_file):
 
 
 def get_logits_from_model(model, fasta_file, device=None):
-    """Gets the probability distribution output of a H3ResNet model"""
+    """Gets the probability distribution output of a AbChiResNet model"""
     seq = get_inputs_from_fasta(fasta_file)
     if not device == None:
         seq = seq.to(device)
@@ -90,7 +90,7 @@ def generate_probabilities(logits):
 
 
 def get_probs_from_model(model, fasta_file, **kwargs):
-    """Gets the probability distribution output of a H3ResNet model"""
+    """Gets the probability distribution output of a AbChiResNet model"""
     logits_list = get_logits_from_model(model, fasta_file, **kwargs)
     probs = []
     for logits in logits_list:

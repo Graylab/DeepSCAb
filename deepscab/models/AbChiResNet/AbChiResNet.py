@@ -3,8 +3,8 @@ from os.path import isfile
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
-from deeph3.resnets import ResNet1D, ResBlock1D, ResNet2D, ResBlock2D
-from deeph3.layers import OuterConcatenation2D, Flatten2D
+from deepscab.resnets import ResNet1D, ResBlock1D, ResNet2D, ResBlock2D
+from deepscab.layers import OuterConcatenation2D, Flatten2D
 
 
 class AbChiResNet(nn.Module):

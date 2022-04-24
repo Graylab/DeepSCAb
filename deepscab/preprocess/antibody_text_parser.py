@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 from os import listdir
 from os.path import join
-from deeph3.util.pdb import protein_dist_angle_matrix, protein_pairwise_geometry_matrix, protein_bb_phi_psi_matrix, protein_chi_matrix
-from deeph3.util.util import _aa_dict, letter_to_num
+from deepscab.util.pdb import protein_dist_angle_matrix, protein_pairwise_geometry_matrix, protein_bb_phi_psi_matrix, protein_chi_matrix
+from deepscab.util.util import _aa_dict, letter_to_num
 from os.path import basename, splitext
 from Bio import SeqIO
 from Bio.SeqUtils import seq1

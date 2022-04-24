@@ -71,6 +71,8 @@ trained_models/
 *.png
 .ipynb_checkpoints/
 trained_models/
+pred_*/
+pretrained_models/
 ROSETTA_CRASH.log
 output_dir/
 scripts/

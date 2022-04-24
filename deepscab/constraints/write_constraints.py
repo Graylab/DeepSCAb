@@ -6,35 +6,19 @@ import torch
 
 import torch
 
-from deeph3.constraints import Constraint, ConstraintType, Residue, ResiduePair, constraint_type_generator_dict
-from deeph3.constraints.custom_filters import cb_glycine_filter, no_max_distance_filter, local_interaction_filter, rotamer_filter
-from deeph3.constraints.rosetta_constraint_generators import neg_log_prob_to_energy
-from deeph3.models.H3ResNet import H3ResNet
-from deeph3.models.ExpandedGeometryResNet import ExpandedGeometryResNet
-from deeph3.models.AbChiResNet import AbChiResNet
-from deeph3.models.AbResNet import AbResNet
-from deeph3.models.ModelEnsemble import ModelEnsemble
-from deeph3.util.get_bins import get_dist_bins, get_dihedral_bins, get_planar_bins, get_rotamer_bins, get_bin_values
-from deeph3.util.model_out import get_probs_from_model
-from deeph3.util.util import load_full_seq
-from deeph3.util.model_out import get_logits_from_model, get_probs_from_model, bin_matrix, binned_mat_to_values
-from deeph3.util.util import load_full_seq
+from deepscab.constraints import Constraint, ConstraintType, Residue, ResiduePair, constraint_type_generator_dict
+from deepscab.constraints.custom_filters import cb_glycine_filter, no_max_distance_filter, local_interaction_filter, rotamer_filter
+from deepscab.constraints.rosetta_constraint_generators import neg_log_prob_to_energy
+from deepscab.models.AbChiResNet.AbChiResNet import AbChiResNet
+
+from deepscab.models.ModelEnsemble import ModelEnsemble
+from deepscab.util.get_bins import get_dist_bins, get_dihedral_bins, get_planar_bins, get_rotamer_bins, get_bin_values
+from deepscab.util.model_out import get_probs_from_model
+from deepscab.util.util import load_full_seq
+from deepscab.util.model_out import get_logits_from_model, get_probs_from_model, bin_matrix, binned_mat_to_values
+from deepscab.util.util import load_full_seq
 
 model_out_constraint_dict = {
-    H3ResNet: [
-        ConstraintType.cbca_distance, ConstraintType.omega_dihedral,
-        ConstraintType.theta_dihedral, ConstraintType.phi_planar
-    ],
-    ExpandedGeometryResNet: [
-        ConstraintType.cbca_distance, ConstraintType.omega_dihedral,
-        ConstraintType.theta_dihedral, ConstraintType.phi_planar,
-        ConstraintType.bb_phi_dihedral, ConstraintType.bb_psi_dihedral
-    ],
-    AbResNet: [
-        ConstraintType.ca_distance, ConstraintType.cb_distance,
-        ConstraintType.no_distance, ConstraintType.omega_dihedral,
-        ConstraintType.theta_dihedral, ConstraintType.phi_planar
-    ],
     AbChiResNet: [
         ConstraintType.cbca_distance, ConstraintType.omega_dihedral,
         ConstraintType.theta_dihedral, ConstraintType.phi_planar,
